@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+  <script src="./js/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <title>Document</title>
+  <script>
+    window.module = {};
+  </script> 
+  <script src="./js/confetti.js"></script>
+  <script>
+    window.confetti = module.exports;
+  </script>
+</head>
+<body>
+  <audio id="player" src="audio/butterfly.mp3" autoplay loop></audio>
+  <div id="game">
+    <div id="cardTotal"></div>
+    <div id="description">
+      <div id="big_digimon">
+        <div id=fork><img src='./images/fork.png'></div>
+        <div id="big_digimon_table"></div>
+        <div id="show_digimon">
+          <img src='./images/1.png' id='digimon_img'>  
+          <p id='digimon_name'>亞古獸</p>
+        </div>
+      </div>
+      <div id="digimon">
+        <div id="digimon0">
+          <img src='./images/1-1.png' id='digimon0_img'>
+          <p style='text-align:center'>幼年期</p> 
+        </div>
+        <div id="digimon1">
+          <img src='./images/1.png' id='digimon1_img'>
+          <p style='text-align:center'>成長期</p>
+        </div>
+        <div id="digimon2">
+          <img src='./images/1-2.png' id='digimon2_img'>
+          <p style='text-align:center'>成熟期</p>
+        </div>
+        <div id="digimon3">
+          <img src='./images/1-3.png' id='digimon3_img'>
+          <p style='text-align:center'>完全體</p>
+        </div>
+        <div id="digimon4">
+          <img src='./images/1-4.png' id='digimon4_img'>
+          <p style='text-align:center'>究極體</p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <script>
+    function toggleSound() {
+      var music = document.getElementById("player");
+      if (music.paused) {
+        music.paused=false;
+        music.play(); 
+      }  
+    }
+    setInterval("toggleSound()",1);
+    const name=[
+      ['滾球獸','亞古獸','暴龍獸','機械暴龍獸','戰鬥暴龍獸'],
+      ['獨角獸','加布獸','加魯魯獸','獸人加魯魯','鋼鐵加魯魯'],
+      ['比高獸','比丘獸','巴多拉獸','伽樓達獸','鳳凰獸'],
+      ['年糕獸','甲蟲獸','比多獸','超比多獸','究極比多獸'],
+      ['種子獸','巴魯獸','仙人掌獸','花仙獸','薔薇獸'],
+      ['布加獸','哥瑪獸','海獅獸','祖頓獸','維京獸'],
+      ['迪哥獸','巴達獸','天使獸','神聖天使獸','究級天使獸'],
+      ['咪羅獸','小狗獸','迪路獸','天女獸','聖龍獸'],
+    ];
+    for(let i=0;i<16;i++){
+      $('#cardTotal').append(`
+      <div class="card">
+        <div class="card-back"></div>
+        <div class="card-front"></div>
+      </div>
+     `)
+    }
+    // 決定花色並打散
+    for(let i=0;i<16;i++){
+      let number=i % (16/2)+1;
+      $('.card').eq(i).find('.card-front').css
+      ({ 
+        "background-image": `url(./images/${number}.png)`, 
+        "background-size": "100px,100px" 
+      })
+      $('.card').eq(i).attr('data-card',number)
+
+      let target=Math.floor(Math.random()*16)
+      $('.card').eq(target).insertAfter($('.card').eq(i))
+    }
+
+    $('#game').on('click','.card',function(){
+      //最多只能翻兩張牌
+      if($('.card-open').length<2 && !$(this).hasClass('card-open')){
+        $(this).addClass('card-open')
+      }
+      //如果兩張牌數字一樣
+      if($('.card-open').length==2){
+        if($('.card-open').eq(0).attr('data-card')==$('.card-open').eq(1).attr('data-card')){
+          //淡出 使用card-clear 標記已解決
+          $('.card-open').fadeTo(1000,0,function(){
+            $('#description').css({
+              "display":"block"
+            })
+            $('#description').addClass('open')
+            $('#description').removeClass('close')
+          }).addClass('card-clear')
+          console.log($('.card-open').eq(0).attr('data-card'))
+          let num0=($('.card-open').eq(0).attr('data-card')-1)
+          $('#digimon_img').attr("src","./images/"+$('.card-open').eq(0).attr('data-card')+"-1.png")
+          $('#digimon_name').text(name[num0][0])
+          $('#digimon0_img').attr("src","./images/"+$('.card-open').eq(0).attr('data-card')+"-1.png")
+          $('#digimon1_img').attr("src","./images/"+$('.card-open').eq(0).attr('data-card')+".png")
+          $('#digimon2_img').attr("src","./images/"+$('.card-open').eq(0).attr('data-card')+"-2.png")
+          $('#digimon3_img').attr("src","./images/"+$('.card-open').eq(0).attr('data-card')+"-3.png")
+          $('#digimon4_img').attr("src","./images/"+$('.card-open').eq(0).attr('data-card')+"-4.png")
+           
+          $('#digimon0_img').on('click',function(){
+            let num=($('#digimon0_img').attr("src").slice(-7,-6)-1)
+            $('#digimon_img').attr("src",$('#digimon0_img').attr("src"))
+            $('#digimon_name').text(name[num][0])
+            console.log($('#digimon0_img').attr("src"))
+            console.log(num)
+          })
+          $('#digimon1_img').on('click',function(){
+            let num1=($('#digimon1_img').attr("src").slice(-5,-4)-1)
+            $('#digimon_img').attr("src",$('#digimon1_img').attr("src"))
+            $('#digimon_name').text(name[num1][1])
+          })
+          $('#digimon2_img').on('click',function(){
+            let num2=($('#digimon0_img').attr("src").slice(-7,-6)-1)
+            $('#digimon_img').attr("src",$('#digimon2_img').attr("src"))
+            $('#digimon_name').text(name[num2][2])
+          })
+          $('#digimon3_img').on('click',function(){
+            let num3=($('#digimon0_img').attr("src").slice(-7,-6)-1)
+            $('#digimon_img').attr("src",$('#digimon3_img').attr("src"))
+            $('#digimon_name').text(name[num3][3])
+          })
+          $('#digimon4_img').on('click',function(){
+            let num4=($('#digimon0_img').attr("src").slice(-7,-6)-1)
+            $('#digimon_img').attr("src",$('#digimon4_img').attr("src"))
+            $('#digimon_name').text(name[num4][4])
+          })
+        }
+        //不管一不一樣都翻回來了
+        setTimeout(()=>{
+          $('.card-open').removeClass('card-open')
+        },1000);
+      }
+    })
+    $('#fork').on('click','img',function(){
+      $('#description').css({
+        "display":"none"
+      })
+      if($('.card-clear').length==16){
+        $('#description').addClass('end')
+      }else{
+        $('#description').addClass('close')
+      }
+      //如果全部翻完
+      if($('.card-clear').length==16 && $('#description').hasClass('end')){
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+        Swal.fire({
+          title: '恭喜完成神經衰弱',
+          confirmButtonText: '再玩一次!!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+       })
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+*{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.4)),url('../images/background.jpg') no-repeat center;
+}
+#game{
+  width: 1920px;
+  height: 800px;
+  background: url('../images/table.png') no-repeat center;
+  background-size: 1500px 1000px;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+}
+#description{
+  width: 1900px;
+  height: 800px;
+  background: url('../images/description.png') no-repeat center;
+  background-size: 1250px 800px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  display: none;
+}
+#fork{
+  transform: translate(1350px,80px);
+}
+#fork img{
+  width: 80px;
+  height: 80px;
+}
+#big_digimon_table{
+  width: 1800px;
+  height: 250px;
+  background: url('../images/show.png') no-repeat center;
+  background-size: 300px 150px;
+  transform: translate(50px,200px);
+}
+#show_digimon{
+  transform: translate(0px,-170px);
+  color: white;
+  text-align: center;
+  font-size: 40px;
+  text-shadow: 0 0 3px #000, 2px 2px 7px #9be1ff, -2px -2px 7px #9be1ff;
+}
+#show_digimon img{
+  width: 210px;
+  height: 250px;
+}
+#digimon{
+  width:100px;
+}
+#digimon0{
+  color: white;
+  background: url('../images/small_background1.png') no-repeat center;
+  background-size: 100px 100px;
+  transform: translate(635px,-150px);
+  text-shadow: 0 0 3px #000, 2px 2px 7px #9be1ff, -2px -2px 7px #9be1ff;
+}
+
+#digimon0 img{
+  width: 100px;
+  height: 100px;
+}
+#digimon1{
+  color: white;
+  transform: translate(765px,-275px);
+  background: url('../images/small_background1.png') no-repeat center;
+  background-size: 100px 100px;
+  text-shadow: 0 0 3px #000, 2px 2px 7px #9be1ff, -2px -2px 7px #9be1ff;
+}
+#digimon1 img{
+  width: 100px;
+  height: 100px;
+}
+#digimon2{
+  color: white;
+  transform: translate(890px,-400px);
+  background: url('../images/small_background1.png') no-repeat center;
+  background-size: 100px 100px;
+  text-shadow: 0 0 3px #000, 2px 2px 7px #9be1ff, -2px -2px 7px #9be1ff;
+}
+#digimon2 img{
+  width: 100px;
+  height: 100px;
+}
+#digimon3{
+  color: white;
+  transform: translate(1015px,-525px);
+  background: url('../images/small_background1.png') no-repeat center;
+  background-size: 100px 100px;
+  text-shadow: 0 0 3px #000, 2px 2px 7px #9be1ff, -2px -2px 7px #9be1ff;
+}
+#digimon3 img{
+  width: 100px;
+  height: 100px;
+}
+#digimon4{
+  color: white;
+  transform: translate(1140px,-680px);
+  background: url('../images/small_background1.png') no-repeat center;
+  background-size: 100px 100px;
+  text-shadow: 0 0 3px #000, 2px 2px 7px #9be1ff, -2px -2px 7px #9be1ff;
+}
+#digimon4 img{
+  width: 100px;
+  height: 150px;
+ 
+}
+#cardTotal{
+  width:1200px;
+  transform: translate(435px,200px);
+  position: absolute;
+}
+.card{
+  width:100px;
+  height: 150px;
+  position: relative;
+  /*設定子元素在3D空間內*/
+  transform-style: preserve-3d;
+  transition: transform .5s;
+  float: left;
+  margin-top: 5px;
+  margin-right: 35px;
+  margin-bottom: 5px;
+  margin-left: 0px;
+}
+.card-front{
+  width: 100%;
+  height: 100%;
+  background:url('./撲克牌/1S.jpg');
+  background-position:center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  transform: rotateY(180deg);
+}
+.card-back{
+  width: 100%;
+  height: 100%;
+  background:url('../images/card_back.jpg');
+  background-position:center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  /*翻過來後隱藏背面*/
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.card.card-open{
+  transform: rotateY(180deg);
+}
